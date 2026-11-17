@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FacultyArchive.ViewModels"
+             xmlns:models="clr-namespace:FacultyArchive.Models"
+             x:Class="FacultyArchive.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="Електронний архів факультету">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Padding="12" RowSpacing="8">
+
+        
+        <FlexLayout Grid.Row="0" Wrap="Wrap">
+            <Button Text="Відкрити" Command="{Binding OpenFileCommand}" Margin="0,0,6,6"/>
+            <Button Text="Зберегти" Command="{Binding SaveCommand}" Margin="0,0,6,6"/>
+            <Button Text="Додати" Command="{Binding AddCommand}" Margin="0,0,6,6"/>
+            <Button Text="Редагувати" Command="{Binding EditCommand}" Margin="0,0,6,6"/>
+            <Button Text="Видалити" Command="{Binding DeleteCommand}" Margin="0,0,6,6"/>
+            <Button Text="Про програму" Command="{Binding ShowAboutCommand}" Margin="0,0,6,6"/>
+        </FlexLayout>
+
+        <Label Grid.Row="1" Text="{Binding CurrentFilePath, StringFormat='Файл: {0}'}"
+               FontSize="12" LineBreakMode="MiddleTruncation"/>
+
+        
+        <FlexLayout Grid.Row="2" Wrap="Wrap" AlignItems="Center">
+            <Picker ItemsSource="{Binding SearchCriteria}"
+                    SelectedItem="{Binding SelectedSearchCriterion}"
+                    WidthRequest="180" Margin="0,0,8,0"/>
+
+            <Entry Text="{Binding SearchText}" Placeholder="Текст пошуку"
+                   IsVisible="{Binding IsTextCriterion}" WidthRequest="240" Margin="0,0,8,0"/>
+
+            <Picker ItemsSource="{Binding MaterialTypeNames}" Title="Вид матеріалу"
+                    SelectedItem="{Binding SearchText}"
+                    IsVisible="{Binding IsTypeCriterion}" WidthRequest="180" Margin="0,0,8,0"/>
+
+            <HorizontalStackLayout IsVisible="{Binding IsVolumeCriterion}" Spacing="6" Margin="0,0,8,0">
+                <Label Text="від" VerticalOptions="Center"/>
+                <Entry Text="{Binding VolumeFrom}" Keyboard="Numeric" WidthRequest="80"/>
+                <Label Text="до" VerticalOptions="Center"/>
+                <Entry Text="{Binding VolumeTo}" Keyboard="Numeric" WidthRequest="80"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout IsVisible="{Binding IsDateCriterion}" Spacing="6" Margin="0,0,8,0">
+                <Label Text="від" VerticalOptions="Center"/>
+                <DatePicker Date="{Binding DateFrom}"/>
+                <Label Text="до" VerticalOptions="Center"/>
+                <DatePicker Date="{Binding DateTo}"/>
+            </HorizontalStackLayout>
+
+            <Button Text="Знайти" Command="{Binding SearchCommand}" Margin="0,0,6,0"/>
+            <Button Text="Скинути" Command="{Binding ResetSearchCommand}"/>
+        </FlexLayout>
+
+       
+        <Grid Grid.Row="3" ColumnDefinitions="2*,3*,2*,2*,1.5*,*,1.5*" ColumnSpacing="6" Padding="8,6"
+              BackgroundColor="{AppThemeBinding Light=#DDDDDD, Dark=#3A3A3A}">
+            <Label Grid.Column="0" Text="П.І.П. автора" FontAttributes="Bold"/>
+            <Label Grid.Column="1" Text="Назва" FontAttributes="Bold"/>
+            <Label Grid.Column="2" Text="Факультет" FontAttributes="Bold"/>
+            <Label Grid.Column="3" Text="Кафедра" FontAttributes="Bold"/>
+            <Label Grid.Column="4" Text="Вид" FontAttributes="Bold"/>
+            <Label Grid.Column="5" Text="Обсяг" FontAttributes="Bold"/>
+            <Label Grid.Column="6" Text="Дата" FontAttributes="Bold"/>
+        </Grid>
+
+        
+        <CollectionView Grid.Row="4" ItemsSource="{Binding Materials}"
+                        SelectionMode="Single" SelectedItem="{Binding SelectedMaterial}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Material">
+                    <Grid ColumnDefinitions="2*,3*,2*,2*,1.5*,*,1.5*" ColumnSpacing="6" Padding="8,8">
+                        <Label Grid.Column="0" Text="{Binding AuthorFullName}" LineBreakMode="TailTruncation"/>
+                        <Label Grid.Column="1" Text="{Binding Title}" LineBreakMode="TailTruncation"/>
+                        <Label Grid.Column="2" Text="{Binding Faculty}" LineBreakMode="TailTruncation"/>
+                        <Label Grid.Column="3" Text="{Binding Department}" LineBreakMode="TailTruncation"/>
+                        <Label Grid.Column="4" Text="{Binding Type}"/>
+                        <Label Grid.Column="5" Text="{Binding Volume}"/>
+                        <Label Grid.Column="6" Text="{Binding CreatedDate, StringFormat='{0:dd.MM.yyyy}'}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

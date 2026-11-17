@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FacultyArchive.ViewModels"
+             x:Class="FacultyArchive.Views.MaterialEditPage"
+             x:DataType="vm:MaterialEditViewModel"
+             Title="{Binding Header}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="8" MaximumWidthRequest="600">
+            <Label Text="{Binding Header}" FontSize="22" FontAttributes="Bold"/>
+
+            <Label Text="П.І.П. автора"/>
+            <Entry Text="{Binding Material.AuthorFullName}"/>
+
+            <Label Text="Назва матеріалу"/>
+            <Entry Text="{Binding Material.Title}"/>
+
+            <Label Text="Факультет"/>
+            <Entry Text="{Binding Material.Faculty}"/>
+
+            <Label Text="Кафедра"/>
+            <Entry Text="{Binding Material.Department}"/>
+
+            <Label Text="Вид матеріалу"/>
+            <Picker ItemsSource="{Binding MaterialTypes}" SelectedItem="{Binding Material.Type}"/>
+
+            <Label Text="Обсяг (сторінок)"/>
+            <Entry Text="{Binding Material.Volume}" Keyboard="Numeric"/>
+
+            <Label Text="Дата створення"/>
+            <DatePicker Date="{Binding Material.CreatedDate}"/>
+
+            <HorizontalStackLayout Spacing="10" Margin="0,16,0,0">
+                <Button Text="Зберегти" Command="{Binding SaveCommand}"/>
+                <Button Text="Скасувати" Command="{Binding CancelCommand}"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

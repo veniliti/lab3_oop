@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FacultyArchive.Views.AboutPage"
+             Title="Про програму">
+
+    <VerticalStackLayout Padding="24" Spacing="10" MaximumWidthRequest="600">
+        <Label Text="Електронний архів факультету" FontSize="22" FontAttributes="Bold"/>
+        <Label Text="{Binding FullName, StringFormat='П.І.П.: {0}'}"/>
+        <Label Text="{Binding Course, StringFormat='Курс: {0}'}"/>
+        <Label Text="{Binding Group, StringFormat='Група: {0}'}"/>
+        <Label Text="{Binding Year, StringFormat='Рік: {0}'}"/>
+        <Label Text="{Binding Description}"/>
+        <Button Text="Закрити" Clicked="OnCloseClicked" HorizontalOptions="Start" Margin="0,16,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>
